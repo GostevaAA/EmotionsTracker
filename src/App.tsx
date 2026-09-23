@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { BackupControls } from './components/BackupControls';
+import { MoodChart } from './components/MoodChart';
+import { MoodDistribution } from './components/MoodDistribution';
 import { MoodForm } from './components/MoodForm';
 import { MoodList } from './components/MoodList';
 import { StatsCard } from './components/StatsCard';
@@ -32,10 +34,7 @@ function App() {
             </p>
           </div>
 
-          <BackupControls
-            entries={entries}
-            onImport={importEntries}
-          />
+          <BackupControls entries={entries} onImport={importEntries} />
         </header>
 
         <StatsCard entries={entries} />
@@ -45,6 +44,10 @@ function App() {
           editing={editing}
           onCancelEdit={() => setEditing(null)}
         />
+
+        <MoodChart entries={entries} />
+
+        <MoodDistribution entries={entries} />
 
         <MoodList
           entries={entries}
