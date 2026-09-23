@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { BackupControls } from './components/BackupControls';
+import { CalendarView } from './components/CalendarView';
 import { MoodChart } from './components/MoodChart';
 import { MoodDistribution } from './components/MoodDistribution';
 import { MoodForm } from './components/MoodForm';
@@ -15,10 +16,31 @@ function App() {
   const importEntries = useMoodStore((s) => s.importEntries);
 
   const [editing, setEditing] = useState<MoodEntry | null>(null);
+  const [presetDate, setPresetDate] = useState<string | undefined>(undefined);
 
   const handleEdit = (entry: MoodEntry) => {
     setEditing(entry);
+    setPresetDate(undefined);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleSelectDate = (dateKey: string) => {
+    const existing = entries.find((e) => e.date === dateKey);
+
+    if (existing) {
+      setEditing(existing);
+      setPresetDate(undefined);
+    } else {
+      setEditing(null);
+      setPresetDate(dateKey);
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleCancelEdit = () => {
+    setEditing(null);
+    setPresetDate(undefined);
   };
 
   return (
@@ -42,7 +64,13 @@ function App() {
         <MoodForm
           onSave={save}
           editing={editing}
-          onCancelEdit={() => setEditing(null)}
+          onCancelEdit={handleCancelEdit}
+          presetDate={presetDate}
+        />
+
+        <CalendarView
+          entries={entries}
+          onSelectDate={handleSelectDate}
         />
 
         <MoodChart entries={entries} />

@@ -7,12 +7,18 @@ type Props = {
     onSave: (entry: NewMoodEntry) => void;
     editing?: MoodEntry | null;
     onCancelEdit?: () => void;
+    presetDate?: string;              // ← новое
 };
 
-export function MoodForm({ onSave, editing, onCancelEdit }: Props) {
+export function MoodForm({ onSave, editing, onCancelEdit, presetDate }: Props) {
     const [mood, setMood] = useState<MoodLevel>(3);
     const [note, setNote] = useState('');
-    const [date, setDate] = useState(todayKey());
+    const [date, setDate] = useState(presetDate ?? todayKey());
+
+    // Синхронизация: если пришла внешняя дата — обновляем
+    useEffect(() => {
+        if (presetDate) setDate(presetDate);
+    }, [presetDate]);
 
     useEffect(() => {
         if (editing) {
@@ -82,7 +88,6 @@ export function MoodForm({ onSave, editing, onCancelEdit }: Props) {
                 >
                     {editing ? 'Обновить' : 'Сохранить'}
                 </button>
-
                 {editing && (
                     <button
                         type="button"
