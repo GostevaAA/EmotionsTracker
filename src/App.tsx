@@ -6,6 +6,7 @@ import { MoodDistribution } from './components/MoodDistribution';
 import { MoodForm } from './components/MoodForm';
 import { MoodList } from './components/MoodList';
 import { StatsCard } from './components/StatsCard';
+import { ThemeToggle } from './components/ThemeToggle';
 import { useMoodStore } from './store/moodStore';
 import type { MoodEntry } from './types/mood';
 
@@ -26,7 +27,6 @@ function App() {
 
   const handleSelectDate = (dateKey: string) => {
     const existing = entries.find((e) => e.date === dateKey);
-
     if (existing) {
       setEditing(existing);
       setPresetDate(undefined);
@@ -34,7 +34,6 @@ function App() {
       setEditing(null);
       setPresetDate(dateKey);
     }
-
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -46,14 +45,20 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-black py-8 px-4">
       <div className="max-w-xl mx-auto space-y-5">
-        <header className="text-center space-y-3">
-          <div>
-            <h1 className="text-3xl font-bold dark:text-white">
-              🎭 EmotionsTracker
-            </h1>
-            <p className="text-gray-500 mt-1 text-sm">
-              Отслеживай, как меняется твоё состояние
-            </p>
+        <header className="space-y-3">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex-1" />
+            <div className="text-center">
+              <h1 className="text-3xl font-bold dark:text-white">
+                🎭 EmotionsTracker
+              </h1>
+              <p className="text-gray-500 mt-1 text-sm">
+                Отслеживай, как меняется твоё состояние
+              </p>
+            </div>
+            <div className="flex-1 flex justify-end">
+              <ThemeToggle />
+            </div>
           </div>
 
           <BackupControls entries={entries} onImport={importEntries} />
@@ -68,20 +73,13 @@ function App() {
           presetDate={presetDate}
         />
 
-        <CalendarView
-          entries={entries}
-          onSelectDate={handleSelectDate}
-        />
+        <CalendarView entries={entries} onSelectDate={handleSelectDate} />
 
         <MoodChart entries={entries} />
 
         <MoodDistribution entries={entries} />
 
-        <MoodList
-          entries={entries}
-          onDelete={remove}
-          onEdit={handleEdit}
-        />
+        <MoodList entries={entries} onDelete={remove} onEdit={handleEdit} />
       </div>
     </div>
   );

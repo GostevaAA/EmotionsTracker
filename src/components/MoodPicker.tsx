@@ -1,7 +1,7 @@
 import type { MoodLevel } from '../types/mood';
 import { MOODS } from '../utils/stats';
 
-const LEVELS: MoodLevel[] = [1, 2, 3, 4, 5];
+const LEVELS: MoodLevel[] = [5, 4, 3, 2, 1];
 
 type Props = {
     value: MoodLevel;
