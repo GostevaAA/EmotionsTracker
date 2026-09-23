@@ -6,6 +6,7 @@ type MoodState = {
     entries: MoodEntry[];
     save: (entry: NewMoodEntry) => void;
     remove: (id: string) => void;
+    importEntries: (entries: MoodEntry[]) => void;
 };
 
 export const useMoodStore = create<MoodState>()(
@@ -15,16 +16,13 @@ export const useMoodStore = create<MoodState>()(
 
             save: (entry) => {
                 const existing = get().entries.find((e) => e.date === entry.date);
-
                 if (existing) {
-                    // Обновляем существующую запись
                     set((state) => ({
                         entries: state.entries.map((e) =>
                             e.id === existing.id ? { ...e, ...entry } : e
                         ),
                     }));
                 } else {
-                    // Создаём новую
                     set((state) => ({
                         entries: [
                             ...state.entries,
@@ -42,6 +40,8 @@ export const useMoodStore = create<MoodState>()(
                 set((state) => ({
                     entries: state.entries.filter((e) => e.id !== id),
                 })),
+
+            importEntries: (entries) => set({ entries }),
         }),
         { name: 'mood-tracker' }
     )
