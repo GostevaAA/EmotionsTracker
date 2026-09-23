@@ -43,16 +43,16 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-black py-8 px-4">
+    <div className="min-h-screen bg-surface-bg dark:bg-surface-bgDark py-8 px-4">
       <div className="max-w-xl mx-auto space-y-5">
         <header className="space-y-3">
           <div className="flex items-center justify-between gap-3">
             <div className="flex-1" />
             <div className="text-center">
-              <h1 className="text-3xl font-bold dark:text-white">
+              <h1 className="text-3xl font-bold text-violet-700 dark:text-violet-300">
                 🎭 EmotionsTracker
               </h1>
-              <p className="text-gray-500 mt-1 text-sm">
+              <p className="text-violet-400 dark:text-violet-400/70 mt-1 text-sm">
                 Отслеживай, как меняется твоё состояние
               </p>
             </div>

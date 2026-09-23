@@ -1,0 +1,34 @@
+:root {
+    /* Акцент */
+    --accent-50: #f5f3ff;
+    --accent-100: #ede9fe;
+    --accent-500: #8b5cf6;
+    --accent-700: #6d28d9;
+    --accent-900: #4c1d95;
+
+    /* Фоны */
+    --surface-bg: #faf8ff;
+    --surface-card: #ffffff;
+    --surface-border: #ede9fe;
+
+    /* Настроения */
+    --mood-1: #e57373;
+    --mood-2: #f0a56e;
+    --mood-3: #e8c05e;
+    --mood-4: #a3c96a;
+    --mood-5: #6ec89a;
+
+    /* Тени */
+    --shadow-soft: 0 2px 8px rgba(139, 92, 246, 0.06),
+        0 4px 16px rgba(139, 92, 246, 0.04);
+
+    /* Радиусы */
+    --radius-card: 24px;
+    --radius-button: 16px;
+}
+
+.dark {
+    --surface-bg: #0f0a1f;
+    --surface-card: #1a1230;
+    --surface-border: #2e1065;
+}

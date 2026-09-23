@@ -11,33 +11,34 @@ import type { MoodEntry } from '../types/mood';
 export type MoodMeta = {
     icon: LucideIcon;
     label: string;
-    color: string;  // основной цвет (иконка, текст)
-    bg: string;     // фон (с прозрачностью)
+    color: string;
+    bg: string;
 };
 
-/**
- * Карта: уровень настроения 1-5 → иконка, подпись, цвета.
- * 1 — очень плохо, 5 — отлично.
- */
+// Цвета настроений — локально, без импортов.
+// Меняешь здесь и в tailwind.config.js.
+const MOOD_COLORS: Record<number, string> = {
+    1: '#e57373',
+    2: '#f0a56e',
+    3: '#e8c05e',
+    4: '#a3c96a',
+    5: '#6ec89a',
+};
+
+const moodColor = (level: number): string =>
+    MOOD_COLORS[level] ?? MOOD_COLORS[3];
+
 export const MOODS: Record<number, MoodMeta> = {
-    1: { icon: Annoyed, label: 'Очень плохо', color: '#ef4444', bg: '#ef444422' },
-    2: { icon: Frown, label: 'Плохо', color: '#f97316', bg: '#f9731622' },
-    3: { icon: Meh, label: 'Нейтрально', color: '#eab308', bg: '#eab30822' },
-    4: { icon: Smile, label: 'Хорошо', color: '#84cc16', bg: '#84cc1622' },
-    5: { icon: Laugh, label: 'Отлично', color: '#22c55e', bg: '#22c55e22' },
+    1: { icon: Annoyed, label: 'Очень плохо', color: moodColor(1), bg: moodColor(1) + '22' },
+    2: { icon: Frown, label: 'Плохо', color: moodColor(2), bg: moodColor(2) + '22' },
+    3: { icon: Meh, label: 'Нейтрально', color: moodColor(3), bg: moodColor(3) + '22' },
+    4: { icon: Smile, label: 'Хорошо', color: moodColor(4), bg: moodColor(4) + '22' },
+    5: { icon: Laugh, label: 'Отлично', color: moodColor(5), bg: moodColor(5) + '22' },
 };
 
-/**
- * Безопасно получить метаданные настроения.
- * Если придёт некорректное число — вернёт нейтральное (3).
- */
 export const getMoodMeta = (mood: number): MoodMeta =>
     MOODS[mood] ?? MOODS[3];
 
-/**
- * Среднее настроение за период.
- * Возвращает число с одним знаком после запятой или null, если записей нет.
- */
 export function averageMood(entries: MoodEntry[]): number | null {
     if (entries.length === 0) return null;
     const sum = entries.reduce((acc, e) => acc + e.mood, 0);
